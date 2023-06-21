@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>水滴石穿——记录遇到的一些疑问（1） | Better Gaofeng</title><meta name="author" content="Better Gaofeng"><meta name="copyright" content="Better Gaofeng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前后端分离为什么不能用session在前后端分离的架构下，前端与后端不再共享session，因为后端应用是无状态的，每次请求都是新的请求，不保存上次请求的状态，所以前端每发送一次请求，都需要从新获取用户信息进行验证。 前后端完全分离后，由于前端不再接受后端传来的渲染好的HTML页面，而是后端只提供RESTful API接口，前端通过AJAX请求后台返回的JSON数据自己进行渲染，所以后台不再需要用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="水滴石穿——记录遇到的一些疑问（1）">
+<meta property="og:url" content="https://nicegaofeng.top/blog/1901809b/index.html">
+<meta property="og:site_name" content="Better Gaofeng">
+<meta property="og:description" content="前后端分离为什么不能用session在前后端分离的架构下，前端与后端不再共享session，因为后端应用是无状态的，每次请求都是新的请求，不保存上次请求的状态，所以前端每发送一次请求，都需要从新获取用户信息进行验证。 前后端完全分离后，由于前端不再接受后端传来的渲染好的HTML页面，而是后端只提供RESTful API接口，前端通过AJAX请求后台返回的JSON数据自己进行渲染，所以后台不再需要用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg">
+<meta property="article:published_time" content="2023-06-21T01:55:58.000Z">
+<meta property="article:modified_time" content="2023-06-21T02:10:38.715Z">
+<meta property="article:author" content="Better Gaofeng">
+<meta property="article:tag" content="日常疑问">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://nicegaofeng.top/blog/1901809b/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '水滴石穿——记录遇到的一些疑问（1）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2023-06-21 10:10:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> GPT</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://gptweb.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTWEB</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://academicgpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTACADEMIC</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://gpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTNEXT</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background: linear-gradient(to bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1)"><nav id="nav"><span id="blog-info"><a href="/" title="Better Gaofeng"><img class="site-icon" src="https://s2.loli.net/2023/06/07/KDyluJ5mPE4FcM8.png"/><span class="site-name">Better Gaofeng</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> GPT</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://gptweb.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTWEB</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://academicgpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTACADEMIC</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://gpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTNEXT</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">水滴石穿——记录遇到的一些疑问（1）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-21T01:55:58.000Z" title="发表于 2023-06-21 09:55:58">2023-06-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-21T02:10:38.715Z" title="更新于 2023-06-21 10:10:38">2023-06-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%97%A5%E5%B8%B8%E7%96%91%E9%97%AE/">日常疑问</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前后端分离为什么不能用session"><a href="#前后端分离为什么不能用session" class="headerlink" title="前后端分离为什么不能用session"></a>前后端分离为什么不能用session</h2><p>在前后端分离的架构下，前端与后端不再共享session，<code>因为后端应用是无状态的</code>，每次请求都是新的请求，不保存上次请求的状态，所以前端每发送一次请求，都需要从新获取用户信息进行验证。</p>
+<p>前后端完全分离后，由于前端不再接受后端传来的渲染好的HTML页面，而是后端只提供RESTful API接口，前端通过AJAX请求后台返回的JSON数据自己进行渲染，所以后台不再需要用session来保存状态，前端使用session效果不好甚至有风险：</p>
+<ul>
+<li>session实现复杂，需要后台程序开发共享session机制，前端需要保持session的一致性。</li>
+<li>session空间大小有限制，过多的数据会占用大量的内存，并且session可以被其他应用篡改。</li>
+</ul>
+<p>而采用令牌(token)作为身份标识，则前后端都不再需要保存状态。后台验证通过后，生成一个令牌，将其返回给前端。后端不再保存令牌信息，前端保存令牌并在随后的请求中携带令牌，并随请求传递给后端。后端收到请求后验证携带的令牌，验证通过后则认为是合法请求，并返回所需要的结果。</p>
+<h2 id="过滤器Filter和拦截器Interceptor区别"><a href="#过滤器Filter和拦截器Interceptor区别" class="headerlink" title="过滤器Filter和拦截器Interceptor区别"></a>过滤器Filter和拦截器Interceptor区别</h2><p>Filter和Interceptor都是Java Web开发中常用的拦截器，它们的作用都是对请求进行拦截和处理，但是它们之间还是有一些区别的。</p>
+<ol>
+<li><p>Filter是Servlet规范中的一种过滤器，是在Servlet容器中实现的，而Interceptor是Spring MVC框架中的一种拦截器，是在Spring容器中实现的。</p>
+</li>
+<li><p>Filter是在请求到达Servlet之前或之后进行拦截和处理，可以对请求和响应进行修改，但是不能访问Controller中的方法和数据；而Interceptor是在请求到达Controller之前或之后进行拦截和处理，可以访问Controller中的方法和数据，可以对请求和响应进行修改，也可以在Controller方法执行之后对返回结果进行修改。</p>
+</li>
+<li><p>Filter可以配置在web.xml中，也可以通过注解方式进行配置，而Interceptor只能通过注解方式进行配置。</p>
+</li>
+<li><p>Filter是Java Web开发中的标准组件，可以用于任何Java Web应用程序中，而Interceptor是Spring MVC框架中的组件，只能用于Spring MVC应用程序中。</p>
+</li>
+</ol>
+<p>总的来说，Filter更加通用，可以用于任何Java Web应用程序中，而Interceptor则更加灵活，可以访问Controller中的方法和数据，对返回结果进行修改。在实际开发中，可以根据具体的需求选择使用Filter或Interceptor来实现拦截和处理。</p>
+<h2 id="Java的函数是值传递还是引用传递"><a href="#Java的函数是值传递还是引用传递" class="headerlink" title="Java的函数是值传递还是引用传递"></a>Java的函数是值传递还是引用传递</h2><p>Java 中的函数参数传递是值传递。这意味着当你将一个变量作为参数传递给一个函数时，函数会得到这个变量的一个副本，而不是这个变量本身。因此，如果在函数中修改了参数的值，那么原始变量的值不会受到影响。但是，如果参数是一个对象，那么副本将包含对该对象的引用，因此在函数中修改对象的属性将影响原始对象的属性。也就是说，虽然 Java 的函数参数传递是值传递，但是对于对象类型的参数，其实是传递了一个引用的副本。</p>
+<h2 id="CMD和ENTRYPOINT的区别"><a href="#CMD和ENTRYPOINT的区别" class="headerlink" title="CMD和ENTRYPOINT的区别"></a>CMD和ENTRYPOINT的区别</h2><p><code>CMD</code> 和 <code>ENTRYPOINT</code> 是 Dockerfile 中两个常用的指令，它们都可以用来定义容器启动时要执行的命令，但是它们有一些不同之处。</p>
+<p><code>CMD</code> 指令用于设置容器启动时要执行的默认命令，可以在 Dockerfile 中多次使用，但只有最后一个 <code>CMD</code> 指令会生效。如果在运行容器时指定了要执行的命令，则会覆盖 <code>CMD</code> 中设置的默认命令。</p>
+<p><code>ENTRYPOINT</code> 指令用于设置容器启动时要执行的命令，可以在 Dockerfile 中多次使用，但只有最后一个 <code>ENTRYPOINT</code> 指令会生效。与 <code>CMD</code> 不同的是，<code>ENTRYPOINT</code> 指令设置的命令不会被覆盖，而是会被作为默认命令的参数。</p>
+<p>例如，假设 Dockerfile 中有以下指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT [&quot;echo&quot;, &quot;Hello&quot;]</span><br><span class="line">CMD [&quot;world&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>则在运行容器时，会执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo Hello world</span><br></pre></td></tr></table></figure>
+
+<p>如果在运行容器时指定了要执行的命令，则会覆盖 <code>CMD</code> 中设置的默认命令，但不会覆盖 <code>ENTRYPOINT</code> 中设置的命令。</p>
+<p>例如，如果在运行容器时指定要执行的命令为 <code>Docker</code>，则会执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo Hello Docker</span><br></pre></td></tr></table></figure>
+
+<p>因此，<code>CMD</code> 和 <code>ENTRYPOINT</code> 的区别在于，<code>CMD</code> 指令设置的命令可以被覆盖，而 <code>ENTRYPOINT</code> 指令设置的命令不会被覆盖，而是会被作为默认命令的参数。</p>
+<p>下面是一些具体的例子：</p>
+<ol>
+<li><p><code>CMD</code> 的例子：假设你的 Docker 镜像是一个 Python 应用程序，你可以使用 <code>CMD</code> 指令来设置默认的启动命令，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMD [&quot;python&quot;, &quot;app.py&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>这个命令将会在容器启动时自动执行，启动 Python 应用程序 <code>app.py</code>。</p>
+<p>如果你需要覆盖默认的 <code>CMD</code> 命令，可以在运行容器时指定新的命令，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run my-image python app2.py</span><br></pre></td></tr></table></figure>
+
+<p>这个命令将会覆盖默认的 <code>CMD</code> 命令，执行 Python 应用程序 <code>app2.py</code>。</p>
+</li>
+<li><p><code>ENTRYPOINT</code> 的例子：假设你的 Docker 镜像是一个 NGINX Web 服务器，你可以使用 <code>ENTRYPOINT</code> 指令来设置默认的启动命令，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>这个命令将会在容器启动时自动执行，启动 NGINX Web 服务器，并将其作为容器的主要应用程序。</p>
+<p>如果你需要覆盖默认的 <code>ENTRYPOINT</code> 命令，可以在运行容器时指定新的命令，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run my-image ls -l</span><br></pre></td></tr></table></figure>
+
+<p>这个命令将会覆盖默认的 <code>ENTRYPOINT</code> 命令，执行 <code>ls -l</code> 命令，而不是启动 NGINX Web 服务器。</p>
+</li>
+</ol>
+<h2 id="为什么用docker而不是虚拟机"><a href="#为什么用docker而不是虚拟机" class="headerlink" title="为什么用docker而不是虚拟机"></a>为什么用docker而不是虚拟机</h2><p>使用 Docker 相对于虚拟机的优点主要有以下几个方面：</p>
+<ol>
+<li><p>更轻量：Docker 容器与宿主机共享操作系统内核，因此 Docker 容器相对于虚拟机来说更加轻量级，启动和停止更快。</p>
+</li>
+<li><p>更快速：Docker 容器的启动时间可以在秒级别内完成，而虚拟机需要几分钟才能启动。</p>
+</li>
+<li><p>更灵活：Docker 容器可以在任何环境中运行，而虚拟机则需要在特定的虚拟化平台上运行。</p>
+</li>
+<li><p>更易于管理：Docker 容器的管理更加简单，可以通过 Docker 命令行工具或者 Docker Compose 来管理容器。</p>
+</li>
+</ol>
+<p>因此，相对于虚拟机，Docker 更加轻量级、快速、灵活和易于管理，因此在很多场景下更为适用。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://nicegaofeng.top">Better Gaofeng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://nicegaofeng.top/blog/1901809b/">https://nicegaofeng.top/blog/1901809b/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://nicegaofeng.top" target="_blank">Better Gaofeng</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%97%A5%E5%B8%B8%E7%96%91%E9%97%AE/">日常疑问</a><a class="post-meta__tags" href="/tags/Docker/">Docker</a><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/blog/5d78c40d/" title="LeetCode 1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">LeetCode 1</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Better Gaofeng</div><div class="author-info__description">一个学习博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XiangGaofeng" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:bettergaofeng@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E7%94%A8session"><span class="toc-number">1.</span> <span class="toc-text">前后端分离为什么不能用session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8Filter%E5%92%8C%E6%8B%A6%E6%88%AA%E5%99%A8Interceptor%E5%8C%BA%E5%88%AB"><span class="toc-number">2.</span> <span class="toc-text">过滤器Filter和拦截器Interceptor区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java%E7%9A%84%E5%87%BD%E6%95%B0%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92"><span class="toc-number">3.</span> <span class="toc-text">Java的函数是值传递还是引用传递</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CMD%E5%92%8CENTRYPOINT%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.</span> <span class="toc-text">CMD和ENTRYPOINT的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8docker%E8%80%8C%E4%B8%8D%E6%98%AF%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-number">5.</span> <span class="toc-text">为什么用docker而不是虚拟机</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/1901809b/" title="水滴石穿——记录遇到的一些疑问（1）">水滴石穿——记录遇到的一些疑问（1）</a><time datetime="2023-06-21T01:55:58.000Z" title="发表于 2023-06-21 09:55:58">2023-06-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/5d78c40d/" title="LeetCode 1">LeetCode 1</a><time datetime="2023-06-21T01:49:48.000Z" title="发表于 2023-06-21 09:49:48">2023-06-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/1136b01d/" title="ChatGP还能这么用? 十分钟写一个SHELL脚本的介绍">ChatGP还能这么用? 十分钟写一个SHELL脚本的介绍</a><time datetime="2023-06-08T09:14:59.000Z" title="发表于 2023-06-08 17:14:59">2023-06-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Better Gaofeng</div><div class="footer_custom_text"><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/"><span>鄂ICP备2023009336号 </span></a> &nbsp;&nbsp;&nbsp;&nbsp;<img src="https://www.beian.gov.cn/img/new/gongan.png"><a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42098402000209"><span>鄂公网安备 42098402000209号 </span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
