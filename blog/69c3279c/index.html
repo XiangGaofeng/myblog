@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Git常见命令 | Better Gaofeng</title><meta name="author" content="Better Gaofeng"><meta name="copyright" content="Better Gaofeng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Git学习查看当前的Git仓库的状态  当我修改test.txt文件之后，使用git status可以看到这里显示我的这个文件的信息。 但是如果我还想看到我到底修改了什么内容呢？ 使用git diff 文件名即可查看到底修改了什么东西   上面的图显示我将 1这是一个Git测试文件   修改为了 12这是一个Git测试文件哈哈哈  如果我直接使用git diff呢，这里我修改了两个文本文件，使用命">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git常见命令">
+<meta property="og:url" content="https://nicegaofeng.top/blog/69c3279c/index.html">
+<meta property="og:site_name" content="Better Gaofeng">
+<meta property="og:description" content="Git学习查看当前的Git仓库的状态  当我修改test.txt文件之后，使用git status可以看到这里显示我的这个文件的信息。 但是如果我还想看到我到底修改了什么内容呢？ 使用git diff 文件名即可查看到底修改了什么东西   上面的图显示我将 1这是一个Git测试文件   修改为了 12这是一个Git测试文件哈哈哈  如果我直接使用git diff呢，这里我修改了两个文本文件，使用命">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg">
+<meta property="article:published_time" content="2023-06-29T05:24:38.000Z">
+<meta property="article:modified_time" content="2023-06-29T05:26:32.249Z">
+<meta property="article:author" content="Better Gaofeng">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://nicegaofeng.top/blog/69c3279c/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Git常见命令',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2023-06-29 13:26:32'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> GPT</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://gptweb.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTWEB</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://academicgpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTACADEMIC</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://gpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTNEXT</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background: linear-gradient(to bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1)"><nav id="nav"><span id="blog-info"><a href="/" title="Better Gaofeng"><img class="site-icon" src="https://s2.loli.net/2023/06/07/KDyluJ5mPE4FcM8.png"/><span class="site-name">Better Gaofeng</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> GPT</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://gptweb.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTWEB</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://academicgpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTACADEMIC</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://gpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTNEXT</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Git常见命令</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-29T05:24:38.000Z" title="发表于 2023-06-29 13:24:38">2023-06-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-29T05:26:32.249Z" title="更新于 2023-06-29 13:26:32">2023-06-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Git/">Git</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Git学习"><a href="#Git学习" class="headerlink" title="Git学习"></a>Git学习</h1><h2 id="查看当前的Git仓库的状态"><a href="#查看当前的Git仓库的状态" class="headerlink" title="查看当前的Git仓库的状态"></a>查看当前的Git仓库的状态</h2><img src="https://image.nicegaofeng.top/image-20230627220834698.png" alt="image-20230627220834698" style="zoom:50%;" />
+
+<p>当我修改test.txt文件之后，使用<code>git status</code>可以看到这里显示我的这个文件的信息。</p>
+<p>但是如果我还想看到我到底修改了什么内容呢？</p>
+<p>使用<code>git diff 文件名</code>即可查看到底修改了什么东西</p>
+<img src="https://image.nicegaofeng.top/image-20230627220932546.png" alt="image-20230627220932546" style="zoom:50%;" />
+
+<p>上面的图显示我将</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这是一个Git测试文件</span><br></pre></td></tr></table></figure>
+
+<p> 修改为了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这是一个Git测试文件</span><br><span class="line">哈哈哈</span><br></pre></td></tr></table></figure>
+
+<p>如果我直接使用<code>git diff</code>呢，这里我修改了两个文本文件，使用命令可以将所有的修改都显示出来。</p>
+<img src="https://image.nicegaofeng.top/image-20230627221239700.png" alt="image-20230627221239700" style="zoom:50%;" />
+
+<h2 id="查看Git的提交历史记录"><a href="#查看Git的提交历史记录" class="headerlink" title="查看Git的提交历史记录"></a>查看Git的提交历史记录</h2><p>可以通过<code>git log</code>查看所有的提交历史。</p>
+<img src="https://image.nicegaofeng.top/image-20230627221654409.png" alt="image-20230627221654409" style="zoom:50%;" />
+
+<p>或者加上<code>--pretty=oneline</code>参数，使得日志变得简洁一点。</p>
+<img src="https://image.nicegaofeng.top/image-20230627221758783.png" alt="image-20230627221758783" style="zoom:50%;" />
+
+<p>如果你觉得还是不简洁，版本号显示的太多了，可以直接使用<code>--oneline</code>参数</p>
+<img src="https://image.nicegaofeng.top/image-20230627222050797.png" alt="image-20230627222050797" style="zoom:50%;" />
+
+<h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><p>首先，Git必须知道当前版本是哪个版本，在Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交<code>f8ca97</code>，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，当然往上100个版本写100个<code>^</code>比较容易数不过来，所以写成<code>HEAD~100</code>。</p>
+<p>现在我们回退到之前的版本，使用<code>git reset</code>命令</p>
+<img src="https://image.nicegaofeng.top/image-20230627222220203.png" alt="image-20230627222220203" style="zoom:50%;" />
+
+<p>可以看到已经回退成功了，但是目前如果想回到<code>f8ca97</code>这个版本怎么办呢？使用<code>git reflog</code>命令可以获取所有的版本id（使用git reset回退到版本a之后再使用git log 是查不到版本a之后的commit id的），然后使用<code>git reset</code>就行了</p>
+<img src="https://image.nicegaofeng.top/image-20230627222730874.png" alt="image-20230627222730874" style="zoom:50%;" />
+
+<img src="https://image.nicegaofeng.top/image-20230627222756023.png" alt="image-20230627222756023" style="zoom:50%;" />
+
+<img src="https://image.nicegaofeng.top/image-20230627222901800.png" alt="image-20230627222901800" style="zoom:50%;" />
+
+<h2 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h2><p><img src="https://image.nicegaofeng.top/image-20230627223800679.png" alt="image-20230627223800679"></p>
+<p>假设你在工作区的文件中写了一些你不想要的东西。比如你喜欢学Java，但是你不想要了。先使用<code>git status</code>看看情况</p>
+<img src="https://image.nicegaofeng.top/image-20230627223947858.png" alt="image-20230627223947858" style="zoom:50%;" />
+
+<p>注意这里有两行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(use <span class="string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)</span><br><span class="line">(use <span class="string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="keyword">in</span> working directory)</span><br></pre></td></tr></table></figure>
+
+<p>这其实是Git在告诉你，如果你想提交的话，就使用<code>git add</code>将文件添加到暂存区，如果你想取消更改，那么使用<code>git restore</code>,来试试</p>
+<img src="https://image.nicegaofeng.top/image-20230627224231662.png" alt="image-20230627224231662" style="zoom:50%;" />
+
+<p>很舒服，修改的东西没有了。当然，如果你直接使用文本编辑器删掉这一行文字也是没毛病的！</p>
+<p>你也可以使用<code>git checkout -- 文件名</code>完成同样的功能。</p>
+<img src="https://image.nicegaofeng.top/image-20230627224436275.png" alt="image-20230627224436275" style="zoom:50%;" />
+
+<p><code>git restore 文件名</code> 和<code>git checkout -- 文件名</code>就是让这个文件回到最近一次<code>git commit</code>或<code>git add</code>时的状态。</p>
+<p>一种是文件自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</p>
+<p>一种是文件已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。</p>
+<hr>
+<p>现在，你又发现了，你将你不想告诉别人的话添加到了暂存区，那我怎么取消呢。</p>
+<p>当我使用<code>git add</code>之后，使用<code>git status</code>之后</p>
+<img src="https://image.nicegaofeng.top/image-20230627225022941.png" alt="image-20230627225022941" style="zoom:50%;" />
+
+<p>可以看到Git提示了一行.来试试！</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(use <span class="string">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage)</span><br></pre></td></tr></table></figure>
+
+<img src="https://image.nicegaofeng.top/image-20230627225144830.png" alt="image-20230627225144830" style="zoom:50%;" />
+
+<p>ok 可以看到已经变了</p>
+<p>然后再使用<code>git restore .\test.txt</code>，直接舒服了！</p>
+<img src="https://image.nicegaofeng.top/image-20230627225301508.png" alt="image-20230627225301508" style="zoom: 50%;" />
+
+<p>如果你提交到了版本库，我们可以使用<code>git reset --hard commit_id</code>进行回退，但是如果你上传到了远程仓库，那就G了。</p>
+<blockquote>
+<p>撤销修改汇总：</p>
+<ul>
+<li>情况1：<strong>文件只在工作区操作，未add</strong>。撤销操作：<strong>git restore <file><strong>。结果：</strong>工作区文件回退</strong>。</li>
+<li>情况2：<strong>文件已add，未commit</strong>。撤销操作：<strong>git restore –staged <file><strong>。结果：</strong>暂存区文件回退，工作区文件未回退，如需继续回退，操按情况1操作。</strong></li>
+<li>情况3：<strong>文件已add，已commit</strong>。撤销操作：<strong>git reset –hard commit_id</strong>。结果：<strong>工作区文件、暂存区文件、本地仓库都回退</strong></li>
+</ul>
+</blockquote>
+<p>来个例子，当我们删除文件时，如果使用shift+删除，就是直接永久删除文件了，这时候可以通过<code>git restore 被删除的文件名</code>来对其进行恢复</p>
+<img src="https://image.nicegaofeng.top/image-20230627230128706.png" alt="image-20230627230128706" style="zoom:50%;" />
+
+<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><h3 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h3><p>创建分支使用<code>git checkout -b 分支名</code></p>
+<p><code>git checkout</code>命令加上<code>-b</code>参数表示创建并切换，相当于以下两条命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch dev</span><br><span class="line">git checkout dev</span><br></pre></td></tr></table></figure>
+
+<p>用<code>git branch</code>命令查看当前分支,<code>git branch</code>命令会列出所有分支，当前分支前面会标一个<code>*</code>号。</p>
+<h3 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h3><p><code>git branch -d 分支名</code></p>
+<h3 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h3><p><code>git checkout 分支名</code></p>
+<h3 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h3><p><code> git merge 分支名</code>可以将分支合并到当前分支。</p>
+<p><img src="https://image.nicegaofeng.top/image-20230628114248094.png" alt="image-20230628114248094"></p>
+<p>注意到上面的<code>Fast-forward</code>信息，Git告诉我们，这次合并是“快进模式”，也就是直接把<code>master</code>指向<code>dev</code>的当前提交，所以合并速度非常快。</p>
+<p>当然，也不是每次合并都能<code>Fast-forward</code>，我们后面会讲其他方式的合并。</p>
+<blockquote>
+<p>总结：</p>
+<p>查看分支：<code>git branch</code></p>
+<p>创建分支：<code>git branch &lt;name&gt;</code></p>
+<p>切换分支：<code>git checkout &lt;name&gt;</code>或者<code>git switch &lt;name&gt;</code></p>
+<p>创建+切换分支：<code>git checkout -b &lt;name&gt;</code>或者<code>git switch -c &lt;name&gt;</code></p>
+<p>合并某分支到当前分支：<code>git merge &lt;name&gt;</code></p>
+<p>删除分支：<code>git branch -d &lt;name&gt;</code></p>
+</blockquote>
+<h2 id="冲突管理"><a href="#冲突管理" class="headerlink" title="冲突管理"></a>冲突管理</h2><img src="https://image.nicegaofeng.top/image-20230628114925403.png" alt="image-20230628114925403" style="zoom:50%;" />
+
+<p>现在我创建了一个分支<code>xx</code>,然后在文件中追加了一行内容。</p>
+<p>然后将其提交到版本库。然后切换到<code>master</code>分支，Git提示我们当前<code>master</code>分支比远程的<code>master</code>分支要超前1个提交。</p>
+<img src="https://image.nicegaofeng.top/image-20230628115247554.png" alt="image-20230628115247554" style="zoom:50%;" />
+
+<p>在<code>master</code>分支</p>
+<p>上肯定看不到<code>test.txt</code>文件的更改，然后我们在文件中在追加了几行内容。然后提交到版本库</p>
+<p>执行合并分支命令。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Auto-merging test.txt</span><br><span class="line">CONFLICT (content): Merge conflict <span class="keyword">in</span> test.txt</span><br><span class="line">Automatic merge failed; fix conflicts and <span class="keyword">then</span> commit the result.</span><br></pre></td></tr></table></figure>
+
+<p>果然冲突了！Git告诉我们，<code>test.txt</code>文件存在冲突，必须手动解决冲突后再提交。<code>git status</code>也可以告诉我们冲突的文件：</p>
+<img src="https://image.nicegaofeng.top/image-20230628115911336.png" alt="image-20230628115911336" style="zoom:50%;" />
+
+<p>当我们查看<code>test.txt</code>发现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">这是一个Git测试文件</span><br><span class="line">哈哈哈</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span><br><span class="line">不学习</span><br><span class="line">=======</span><br><span class="line">学习</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; xx</span><br><span class="line">测试分支</span><br><span class="line">测试冲突管理</span><br></pre></td></tr></table></figure>
+
+<p>Git用<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>，<code>=======</code>，<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>标记出不同分支的内容，我们修改如下后保存：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">这是一个Git测试文件</span><br><span class="line">哈哈哈</span><br><span class="line">不学习没饭吃</span><br><span class="line">学习有饭吃</span><br><span class="line">测试分支</span><br><span class="line">测试冲突管理</span><br></pre></td></tr></table></figure>
+
+<p>然后提交，问题解决</p>
+<p>用带参数的<code>git log</code>也可以看到分支的合并情况：<code>git log --graph --oneline --abbrev-commit</code></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://nicegaofeng.top">Better Gaofeng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://nicegaofeng.top/blog/69c3279c/">https://nicegaofeng.top/blog/69c3279c/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://nicegaofeng.top" target="_blank">Better Gaofeng</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Git/">Git</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/blog/4353bd87/" title="Java自定义全局异常处理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Java自定义全局异常处理</div></div></a></div><div class="next-post pull-right"><a href="/blog/7fe8e8c6/" title="单点登陆(SSO)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">单点登陆(SSO)</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Better Gaofeng</div><div class="author-info__description">一个学习博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/XiangGaofeng"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XiangGaofeng" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:bettergaofeng@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">Git学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%9A%84Git%E4%BB%93%E5%BA%93%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">1.1.</span> <span class="toc-text">查看当前的Git仓库的状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BGit%E7%9A%84%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95"><span class="toc-number">1.2.</span> <span class="toc-text">查看Git的提交历史记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="toc-number">1.3.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E4%BF%AE%E6%94%B9"><span class="toc-number">1.4.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF"><span class="toc-number">1.5.1.</span> <span class="toc-text">创建分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="toc-number">1.5.2.</span> <span class="toc-text">删除分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="toc-number">1.5.3.</span> <span class="toc-text">切换分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF"><span class="toc-number">1.5.4.</span> <span class="toc-text">合并分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B2%E7%AA%81%E7%AE%A1%E7%90%86"><span class="toc-number">1.6.</span> <span class="toc-text">冲突管理</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/4d410936/" title="springboot通过AOP实现业务增强">springboot通过AOP实现业务增强</a><time datetime="2023-06-29T07:12:28.000Z" title="发表于 2023-06-29 15:12:28">2023-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/d170ef85/" title="springboot启动前执行部分程序">springboot启动前执行部分程序</a><time datetime="2023-06-29T07:01:26.000Z" title="发表于 2023-06-29 15:01:26">2023-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/4353bd87/" title="Java自定义全局异常处理">Java自定义全局异常处理</a><time datetime="2023-06-29T05:27:08.000Z" title="发表于 2023-06-29 13:27:08">2023-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/69c3279c/" title="Git常见命令">Git常见命令</a><time datetime="2023-06-29T05:24:38.000Z" title="发表于 2023-06-29 13:24:38">2023-06-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/7fe8e8c6/" title="单点登陆(SSO)">单点登陆(SSO)</a><time datetime="2023-06-26T09:25:35.000Z" title="发表于 2023-06-26 17:25:35">2023-06-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Better Gaofeng</div><div class="footer_custom_text"><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/"><span>鄂ICP备2023009336号 </span></a> &nbsp;&nbsp;&nbsp;&nbsp;<img src="https://www.beian.gov.cn/img/new/gongan.png"><a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42098402000209"><span>鄂公网安备 42098402000209号 </span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
