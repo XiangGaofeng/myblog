@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>IOC、AOP、Bean | Better Gaofeng</title><meta name="author" content="Better Gaofeng"><meta name="copyright" content="Better Gaofeng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="控制反转：IoC（Inverse of Control）把创建对象的工作交由Spring完成，Spring在创建对象的时候同时可以完成对象属性赋值（DI）   ioc的思想最核心的地方在于，资源不由使用资源者管理，而由不使用资源的第三方管理，这可以带来很多好处。第一，资源集中管理，实现资源的可配置和易管理。第二，降低了使用资源双方的依赖程度，也就是我们说的耦合度。   DI(依赖注入)Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IOC、AOP、Bean">
+<meta property="og:url" content="https://nicegaofeng.top/blog/550822b9/index.html">
+<meta property="og:site_name" content="Better Gaofeng">
+<meta property="og:description" content="控制反转：IoC（Inverse of Control）把创建对象的工作交由Spring完成，Spring在创建对象的时候同时可以完成对象属性赋值（DI）   ioc的思想最核心的地方在于，资源不由使用资源者管理，而由不使用资源的第三方管理，这可以带来很多好处。第一，资源集中管理，实现资源的可配置和易管理。第二，降低了使用资源双方的依赖程度，也就是我们说的耦合度。   DI(依赖注入)Spring">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202209/b0d5b4cfb7158edc66836c9732a954f9--2732657848.jpg">
+<meta property="article:published_time" content="2023-07-22T02:19:02.000Z">
+<meta property="article:modified_time" content="2023-07-22T02:21:58.799Z">
+<meta property="article:author" content="Better Gaofeng">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202209/b0d5b4cfb7158edc66836c9732a954f9--2732657848.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://nicegaofeng.top/blog/550822b9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'IOC、AOP、Bean',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2023-07-22 10:21:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> GPT</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://gptweb.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTWEB</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://academicgpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTACADEMIC</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://gpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTNEXT</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202209/b0d5b4cfb7158edc66836c9732a954f9--2732657848.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Better Gaofeng"><img class="site-icon" src="https://s2.loli.net/2023/06/30/BjFURc5Nud7k1gE.png"/><span class="site-name">Better Gaofeng</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> GPT</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://gptweb.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTWEB</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://academicgpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTACADEMIC</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://gpt.bettergaofeng.top/"><i class="fa-fw fa-brands fa-space-awesome"></i><span> GPTNEXT</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">IOC、AOP、Bean</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-22T02:19:02.000Z" title="发表于 2023-07-22 10:19:02">2023-07-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-22T02:21:58.799Z" title="更新于 2023-07-22 10:21:58">2023-07-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Spring/">Spring</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="控制反转：IoC（Inverse-of-Control）"><a href="#控制反转：IoC（Inverse-of-Control）" class="headerlink" title="控制反转：IoC（Inverse of Control）"></a>控制反转：IoC（Inverse of Control）</h2><p>把创建对象的工作交由Spring完成，Spring在创建对象的时候同时可以完成对象属性赋值（DI）</p>
+<blockquote>
+<p> ioc的思想最核心的地方在于，资源不由使用资源者管理，而由不使用资源的第三方管理，这可以带来很多好处。第一，资源集中管理，实现资源的可配置和易管理。第二，降低了使用资源双方的依赖程度，也就是我们说的耦合度。</p>
+</blockquote>
+<hr>
+<h2 id="DI-依赖注入"><a href="#DI-依赖注入" class="headerlink" title="DI(依赖注入)"></a>DI(依赖注入)</h2><p>Spring通过<code>反射</code>创建对象的过程中，把对象依赖的属性注入到对象中。依赖注入主要有两种方式：构造器注入和属性注入。</p>
+<h3 id="set方法注入"><a href="#set方法注入" class="headerlink" title="set方法注入"></a>set方法注入</h3><p>在bean标签中通过配置property标签给属性属性赋值，实际上就是通过反射调用set方法完成属性的注入</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--通过bean将实体类配置给Spring进行管理,id表示实体类的唯一表示--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;stu&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.qfedu.ioc.bean.Student&quot;</span> <span class="attr">autowire</span>=<span class="string">&quot;byName&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;stuNum&quot;</span> <span class="attr">value</span>=<span class="string">&quot;10001&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;stuAge&quot;</span> <span class="attr">value</span>=<span class="string">&quot;12&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;weight&quot;</span> <span class="attr">value</span>=<span class="string">&quot;62.3&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="构造器注入"><a href="#构造器注入" class="headerlink" title="构造器注入"></a>构造器注入</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String stuNum;</span><br><span class="line">    <span class="keyword">private</span> String stuName;</span><br><span class="line">    <span class="keyword">private</span> String stuGender;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> stuAge;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">double</span> weight;</span><br><span class="line">    <span class="keyword">private</span> Date enterenceTime; <span class="comment">//入学日期</span></span><br><span class="line">    <span class="keyword">private</span> Clazz clazz;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(String stuNum, String stuName, String stuGender, <span class="type">int</span> stuAge, <span class="type">double</span> weight, Date enterenceTime, Clazz clazz)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.stuNum = stuNum;</span><br><span class="line">        <span class="built_in">this</span>.stuName = stuName;</span><br><span class="line">        <span class="built_in">this</span>.stuGender = stuGender;</span><br><span class="line">        <span class="built_in">this</span>.stuAge = stuAge;</span><br><span class="line">        <span class="built_in">this</span>.weight = weight;</span><br><span class="line">        <span class="built_in">this</span>.enterenceTime = enterenceTime;</span><br><span class="line">        <span class="built_in">this</span>.clazz = clazz;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;date&quot;</span> <span class="attr">class</span>=<span class="string">&quot;java.util.Date&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;stu&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.qfedu.ioc.bean.Student&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;0&quot;</span> <span class="attr">value</span>=<span class="string">&quot;10001&quot;</span>/&gt;</span>       <span class="comment">&lt;!--字符串类型--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;女&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;张三&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;3&quot;</span> <span class="attr">value</span>=<span class="string">&quot;21&quot;</span>/&gt;</span>       <span class="comment">&lt;!--简单类型--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;4&quot;</span> <span class="attr">value</span>=<span class="string">&quot;62.5&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;5&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;date&quot;</span>/&gt;</span>       <span class="comment">&lt;!--对象类型--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">index</span>=<span class="string">&quot;6&quot;</span>&gt;</span>                  <span class="comment">&lt;!--对象类型--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;com.qfedu.ioc.bean.Clazz&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h2><p>1.调用bean的构造方法创建Bean</p>
+<p>2.通过反射调用setter方法进行属性的依赖注入</p>
+<p>3.如果Bean实现了<code>BeanNameAware</code>接口，Spring将调用<code>setBeanName</code>()，设置 <code>Bean</code>的name（xml文件中bean标签的id）</p>
+<p>4.如果Bean实现了<code>BeanFactoryAware</code>接口，Spring将调用<code>setBeanFactory()</code>把bean factory设置给Bean</p>
+<p>5.如果存在<code>BeanPostProcessor</code>，Spring将调用它们的<code>postProcessBeforeInitialization</code>（预初始化）方法，在Bean初始化前对其进行处理</p>
+<p>6.如果Bean实现了<code>InitializingBean</code>接口，Spring将调用它的<code>afterPropertiesSet</code>方法，然后调用xml定义的 init-method 方法，两个方法作用类似，都是在初始化 bean 的时候执行</p>
+<p>7.如果存在<code>BeanPostProcessor</code>，Spring将调用它们的<code>postProcessAfterInitialization</code>（后初始化）方法，在Bean初始化后对其进行处理</p>
+<p>8.Bean初始化完成，供应用使用，这里分两种情况：</p>
+<p>8.1 如果Bean为单例的话，那么容器会返回Bean给用户，并存入缓存池。如果Bean实现了<code>DisposableBean</code>接口，Spring将调用它的<code>destory</code>方法，然后调用在xml中定义的 <code>destory-method</code>方法，这两个方法作用类似，都是在Bean实例销毁前执行。</p>
+<p>8.2 如果Bean是多例的话，容器将Bean返回给用户，剩下的生命周期由用户控制。</p>
+<p><img src="https://s2.loli.net/2023/07/22/G3pJ4nFdrLP1R5g.png"></p>
+<h2 id="Spring容器IOC初始化过程"><a href="#Spring容器IOC初始化过程" class="headerlink" title="Spring容器IOC初始化过程"></a>Spring容器IOC初始化过程</h2><ol>
+<li>首先在spring中我们会定义一个资源文件，一般叫做<code>applicationContext.xml</code>,我们的<code>bean</code>都在里边进行配置定义.</li>
+</ol>
+<blockquote>
+<p>Spring中有个模块叫<code>Resource</code>模块，顾名思义，就是<code>资源</code>嘛！用于对所有资源<code>xml、txt、property</code>等文件资源的抽象。</p>
+</blockquote>
+<ol start="2">
+<li>有了资源文件就需要进行读取，因此引入了<code>ResourceLoader</code>组件，它可以对Spring的资源（xml<code>、</code>properties等）进行加载，返回一个对应类型的<code>Resource</code>对象。</li>
+<li>我们拥有了加载器<code>ResourceLoader</code>，也拥有了对资源的描述<code>Resource</code>,但是我们在xml文件中声明的<code>&lt;bean/&gt;</code>标签在Spring又是怎么表示的呢？注意这里只是说对<code>bean</code>的定义，而不是说如何将<code>&lt;bean/&gt;</code>转换为<code>bean</code>对象。就像你想表示一个学生<code>Student</code>，那么你在程序中肯定要声明一个类<code>Student</code>吧！于是就引入一个叫<code>BeanDefinition</code>的组件.</li>
+</ol>
+<blockquote>
+<p>配置文件中的<code>&lt;bean/&gt;</code>标签跟我们的<code>BeanDefinition</code>是一一对应的，<code>&lt;bean&gt;</code>元素标签拥有<code>class</code>、<code>scope</code>、<code>lazy-init</code>等配置属性，<code>BeanDefinition</code>则提供了相应的<code>beanClass</code>、<code>scope</code>、<code>lazyInit</code>属性</p>
+</blockquote>
+<ol start="4">
+<li><p>有了加载器<code>ResourceLoader</code>，也拥有了对资源的描述<code>Resource</code>，也有了对<code>bean</code>的定义，我们不禁要问，我们的<code>Resource</code>资源是怎么转成我们的<code>BeanDefinition</code>的呢?因此就引入了<code>BeanDefinitionReader</code>组件.</p>
+</li>
+<li><p>好了！基本上所有组件都快齐全了！对了，还有一个组件，你有了<code>BeanDefinition</code>后，你还必须将它们注册到工厂中去，所以当你使用<code>getBean()</code>方法时工厂才知道返回什么给你。还有一个问题，既然要保存注册这些<code>bean</code>,那肯定要有个数据结构充当容器吧！没错，就是一个<code>Map</code>(BeanDefinitionRegistry).后续操作直接从<code>BeanDefinitionRegistry</code>中读取配置信息</p>
+<p><img src="https://s2.loli.net/2023/07/22/xtrz8jLZ16kNocl.webp"></p>
+<blockquote>
+<p>单例bean的初始化以及依赖注入一般都在容器初始化阶段进行，只有懒加载（lazy-init为true）的单例bean是在应用第一次调用getBean()时进行初始化和依赖注入。</p>
+<p>多例bean 在容器启动时不实例化，即使设置 lazy-init 为 false 也没用，只有调用了getBean()才进行实例化</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903581678600206">参考（Spring容器IOC初始化过程）</a></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="BeanFactory和FactoryBean的区别"><a href="#BeanFactory和FactoryBean的区别" class="headerlink" title="BeanFactory和FactoryBean的区别"></a>BeanFactory和FactoryBean的区别</h2><p><strong>BeanFactory</strong>：管理Bean的容器，Spring中生成的Bean都是由这个接口的实现来管理的。</p>
+<p><strong>FactoryBean</strong>：通常是用来创建比较复杂的bean，一般的bean 直接用xml配置即可，但如果一个bean的创建过程中涉及到很多其他的bean 和复杂的逻辑，直接用xml配置比较麻烦，这时可以考虑用FactoryBean，可以隐藏实例化复杂Bean的细节。</p>
+<blockquote>
+<p>BeanFactory是个Factory，也就是IOC容器或对象工厂，FactoryBean是个Bean。</p>
+</blockquote>
+<h2 id="面向切面：AOP（Aspect-Oriented-Programming）"><a href="#面向切面：AOP（Aspect-Oriented-Programming）" class="headerlink" title="面向切面：AOP（Aspect Oriented Programming）"></a>面向切面：AOP（Aspect Oriented Programming）</h2><ul>
+<li>可以在不改变原有业务逻辑的情况下实现对业务的增强.AOP作为面向对象的一种补充，将公共逻辑（事务管理、日志、缓存等）封装成切面，跟业务代码进行分离，可以减少系统的重复代码和降低模块之间的耦合度。切面就是那些与业务无关，但所有业务模块都会调用的公共逻辑。</li>
+</ul>
+<h2 id="AOP的实现方式"><a href="#AOP的实现方式" class="headerlink" title="AOP的实现方式"></a>AOP的实现方式</h2><p><strong>静态代理</strong></p>
+<p>静态代理：代理类在<code>编译阶段</code>生成，在编译阶段将通知织入Java字节码中，也称编译时增强。AspectJ使用的是静态代理。</p>
+<p>缺点：代理对象需要与目标对象实现一样的接口，并且实现接口的方法，会有冗余代码。同时，一旦接口增加方法，目标对象与代理对象都要维护。</p>
+<p><strong>动态代理</strong></p>
+<p>动态代理：代理类在程序运行时创建，AOP框架不会去修改字节码，而是在内存中临时生成一个<code>代理对象</code>，在运行期间对业务方法进行增强，不会生成新类。</p>
+<h2 id="Spring-AOP的实现原理"><a href="#Spring-AOP的实现原理" class="headerlink" title="Spring AOP的实现原理"></a>Spring AOP的实现原理</h2><p><code>Spring</code>的<code>AOP</code>实现原理其实很简单，就是通过<strong>动态代理</strong>实现的。如果我们为<code>Spring</code>的某个<code>bean</code>配置了切面，那么<code>Spring</code>在创建这个<code>bean</code>的时候，实际上创建的是这个<code>bean</code>的一个代理对象，我们后续对<code>bean</code>中方法的调用，实际上调用的是代理类重写的代理方法。而<code>Spring</code>的<code>AOP</code>使用了两种动态代理，分别是<strong>JDK的动态代理</strong>，以及<strong>CGLib的动态代理</strong>。</p>
+<h2 id="JDK动态代理和CGLIB动态代理"><a href="#JDK动态代理和CGLIB动态代理" class="headerlink" title="JDK动态代理和CGLIB动态代理"></a>JDK动态代理和CGLIB动态代理</h2><p><strong>JDK动态代理</strong></p>
+<p>如果目标类实现了接口，Spring AOP会选择使用JDK动态代理目标类。代理类根据目标类实现的接口动态生成，不需要自己编写，生成的动态代理类和目标类都实现相同的接口。JDK动态代理的核心是<code>InvocationHandler</code>接口和<code>Proxy</code>类。</p>
+<p>缺点：<strong>目标类必须有实现的接口</strong>。如果某个类没有实现接口，那么这个类就不能用JDK动态代理。</p>
+<p><strong>CGLIB动态代理</strong></p>
+<p><strong>通过继承实现</strong>。如果目标类没有实现接口，那么Spring AOP会选择使用CGLIB来动态代理目标类。CGLIB（Code Generation Library）可以在运行时动态生成类的字节码，动态创建目标类的子类对象，在子类对象中增强目标类。</p>
+<p>CGLIB是通过继承的方式做的动态代理，因此如果某个类被标记为<code>final</code>，那么它是无法使用CGLIB做动态代理的。</p>
+<p>优点：目标类不需要实现特定的接口，更加灵活。</p>
+<blockquote>
+<ol>
+<li>如果目标对象实现了接口，默认情况下会采用JDK的动态代理实现AOP</li>
+<li>如果目标对象实现了接口，可以强制使用CGLIB实现AOP</li>
+<li>如果目标对象没有实现了接口，必须采用CGLIB库</li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://nicegaofeng.top">Better Gaofeng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://nicegaofeng.top/blog/550822b9/">https://nicegaofeng.top/blog/550822b9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://nicegaofeng.top" target="_blank">Better Gaofeng</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/Spring/">Spring</a></div><div class="post_share"><div class="social-share" data-image="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202209/b0d5b4cfb7158edc66836c9732a954f9--2732657848.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/blog/db16c779/" title="Java常见的数据结构"><img class="cover" src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202304/8a71f5f55ae4a6d09310b798dbcba963--3754472394.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Java常见的数据结构</div></div></a></div><div class="next-post pull-right"><a href="/blog/8b9d7b34/" title="Java 锁--整理于尚硅谷JUC课程"><img class="cover" src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202306/65dd83f0f0600aa172c67b4db89b5c8f--2032768543.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java 锁--整理于尚硅谷JUC课程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/blog/af0b9658/" title="CompletableFuture使用"><img class="cover" src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202209/e4b252312e56bbd6bd61524347497c8f--3279889683.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-21</div><div class="title">CompletableFuture使用</div></div></a></div><div><a href="/blog/db16c779/" title="Java常见的数据结构"><img class="cover" src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202304/8a71f5f55ae4a6d09310b798dbcba963--3754472394.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-22</div><div class="title">Java常见的数据结构</div></div></a></div><div><a href="/blog/4353bd87/" title="Java自定义全局异常处理"><img class="cover" src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202305/f40baa16fe0ed2c56e8c87602d8992da--1515402007.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-29</div><div class="title">Java自定义全局异常处理</div></div></a></div><div><a href="/blog/8b9d7b34/" title="Java 锁--整理于尚硅谷JUC课程"><img class="cover" src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202306/65dd83f0f0600aa172c67b4db89b5c8f--2032768543.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-21</div><div class="title">Java 锁--整理于尚硅谷JUC课程</div></div></a></div><div><a href="/blog/e4407f9/" title="springboot读取配置文件的值并对bean做出修改"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-26</div><div class="title">springboot读取配置文件的值并对bean做出修改</div></div></a></div><div><a href="/blog/4d410936/" title="springboot通过AOP实现业务增强"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-29</div><div class="title">springboot通过AOP实现业务增强</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/06/07/cRBHDM7K3xGgPWi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Better Gaofeng</div><div class="author-info__description">一个学习博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/XiangGaofeng"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XiangGaofeng" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:bettergaofeng@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%9AIoC%EF%BC%88Inverse-of-Control%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">控制反转：IoC（Inverse of Control）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DI-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">DI(依赖注入)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#set%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.</span> <span class="toc-text">set方法注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%99%A8%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.</span> <span class="toc-text">构造器注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">3.</span> <span class="toc-text">Bean的生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E5%AE%B9%E5%99%A8IOC%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">Spring容器IOC初始化过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BeanFactory%E5%92%8CFactoryBean%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">5.</span> <span class="toc-text">BeanFactory和FactoryBean的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%EF%BC%9AAOP%EF%BC%88Aspect-Oriented-Programming%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">面向切面：AOP（Aspect Oriented Programming）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AOP%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">AOP的实现方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-AOP%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">Spring AOP的实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CCGLIB%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="toc-number">9.</span> <span class="toc-text">JDK动态代理和CGLIB动态代理</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/db16c779/" title="Java常见的数据结构"><img src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202304/8a71f5f55ae4a6d09310b798dbcba963--3754472394.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java常见的数据结构"/></a><div class="content"><a class="title" href="/blog/db16c779/" title="Java常见的数据结构">Java常见的数据结构</a><time datetime="2023-07-22T02:21:20.000Z" title="发表于 2023-07-22 10:21:20">2023-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/550822b9/" title="IOC、AOP、Bean"><img src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202209/b0d5b4cfb7158edc66836c9732a954f9--2732657848.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IOC、AOP、Bean"/></a><div class="content"><a class="title" href="/blog/550822b9/" title="IOC、AOP、Bean">IOC、AOP、Bean</a><time datetime="2023-07-22T02:19:02.000Z" title="发表于 2023-07-22 10:19:02">2023-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/8b9d7b34/" title="Java 锁--整理于尚硅谷JUC课程"><img src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202306/65dd83f0f0600aa172c67b4db89b5c8f--2032768543.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 锁--整理于尚硅谷JUC课程"/></a><div class="content"><a class="title" href="/blog/8b9d7b34/" title="Java 锁--整理于尚硅谷JUC课程">Java 锁--整理于尚硅谷JUC课程</a><time datetime="2023-07-21T14:18:15.000Z" title="发表于 2023-07-21 22:18:15">2023-07-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/af0b9658/" title="CompletableFuture使用"><img src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202209/e4b252312e56bbd6bd61524347497c8f--3279889683.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CompletableFuture使用"/></a><div class="content"><a class="title" href="/blog/af0b9658/" title="CompletableFuture使用">CompletableFuture使用</a><time datetime="2023-07-21T13:58:09.000Z" title="发表于 2023-07-21 21:58:09">2023-07-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/5af02a63/" title="缓存穿透、缓存雪崩、缓存击穿"><img src="http://cdn-hw-static.shanhutech.cn/bizhi/staticwp/202306/992e99c764ab4a25be0bf00f7a5f7857--294381283.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="缓存穿透、缓存雪崩、缓存击穿"/></a><div class="content"><a class="title" href="/blog/5af02a63/" title="缓存穿透、缓存雪崩、缓存击穿">缓存穿透、缓存雪崩、缓存击穿</a><time datetime="2023-07-20T13:11:15.000Z" title="发表于 2023-07-20 21:11:15">2023-07-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Better Gaofeng</div><div class="footer_custom_text"><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/"><span>鄂ICP备2023009336号 </span></a> &nbsp;&nbsp;&nbsp;&nbsp;<img src="https://www.beian.gov.cn/img/new/gongan.png"><a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42098402000209"><span>鄂公网安备 42098402000209号 </span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
